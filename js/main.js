@@ -6,7 +6,6 @@
   // let my_handmoney = 10000;
   let enemy_handmoney = 10000;
 
-
   // ランダムで生成された１０個の数字の保持
   let deliver_card = [];
   // カードをめくった枚数の保持
@@ -50,7 +49,6 @@
   const won_left = document.getElementById('won_left');
   const won_right = document.getElementById('won_right');
 
-  
 
   // var myTurn = function(callback) {
   //   console.log('オレのターン!');
@@ -64,6 +62,7 @@
   //   }
   // };
 
+  // --------ローカルストレージ処理--------
   const my_value = location.search.substring(1);///name
   localStorage.setItem('url_name', `${my_value}`);
   let USER = localStorage.getItem("url_name");
@@ -77,36 +76,35 @@
   rogout.addEventListener('click', () => {
     localStorage.setItem('hand_money', `${my_handmoney}`);
   });
+  // -------end--------
 
   function checking_left() {
     if (addition_left_count > 21) {
       // alert('ぶた');
-      
-
       btn_left_add_smoke();
-      stand_boolean_check();
+      stand_boolean_check()
+      stand_left_boolean = true;
 
     } else if (addition_left_count == 21) {
       btn_left_add_smoke();
       stand_left_boolean = true;
       // alert('Brack Jack');
       stand_boolean_check();
-
     }
+
   }
+
   function checking_right() {
     if (addition_right_count > 21) {
       // alert('ぶた');
-      stand_right_boolean = true;
       btn_right_add_smoke();
       stand_boolean_check();
-
+      stand_right_boolean = true;
     } else if (addition_right_count == 21) {
-      btn_right_add_smoke();
-      stand_right_boolean = true;
       // alert('Brack Jack');
+      btn_right_add_smoke();
       stand_boolean_check();
-
+      stand_right_boolean = true;
     }
   }
   const choise_left = document.getElementById('choise_left');
@@ -116,12 +114,9 @@
     addition_left_count += 1;
     addition_left.textContent = addition_left_count;
     checking_left();
-
-
     ///////
     choise_left.classList.add('none');
     check_total();
-
   });
   const eleven_left = document.getElementById('eleven_left');
   eleven_left.addEventListener('click', () => {
@@ -130,24 +125,21 @@
     checking_left();
     choise_left.classList.add('none');
     check_total();
-
   });
   const one_right = document.getElementById('one_right');
-  one_right.addEventListener('click', () => {
-    addition_right_count += 1;
-    addition_right.textContent = addition_right_count;
-    checking_right();
-    choise_right.classList.add('none');
-  });
+  // one_right.addEventListener('click', () => {
+  //   addition_right_count += 1;
+  //   addition_right.textContent = addition_right_count;
+  //   checking_right();
+  //   choise_right.classList.add('none');
+  // });
   const eleven_right = document.getElementById('eleven_right');
-  eleven_right.addEventListener('click', () => {
-    addition_right_count += 11;
-    addition_right.textContent = addition_right_count;
-    checking_right();
-    choise_right.classList.add('none');
-  });
-
-
+  // eleven_right.addEventListener('click', () => {
+  //   addition_right_count += 11;
+  //   addition_right.textContent = addition_right_count;
+  //   checking_right();
+  //   choise_right.classList.add('none');
+  // });
 
   const handmoney_left = document.getElementById('handmoney_left');
   handmoney_left.textContent = my_handmoney;
@@ -158,19 +150,16 @@
   const addition_right = document.getElementById('addition_right');
   const addition_left = document.getElementById('addition_left');
 
-
   btn_left_add_smoke();
   btn_right_add_smoke();
 
   function openbtn2_left() {
     choise_left.classList.remove('none');
-
   }
   function openbtn2_right() {
     choise_right.classList.remove('none');
 
   }
-
   class Card {
     constructor() {
       this.tranp = [];
@@ -193,66 +182,73 @@
     }
     // 最初に配られるカードの処理＋和の表示
     first_delivery_card() {
+      console.log(addition_right.textContent);
       // 左
-
-
-        card_left_1.textContent = deliver_card[0];
-        card_left_2.textContent = deliver_card[2];
-        card_left_1.classList.remove('none');
-        card_left_2.classList.remove('none');
-        addition_left.classList.remove('none');
-        if (deliver_card[0] >= 10) {
-          addition_left_count += 10;
-        } else if (deliver_card[0] == 1) {
-          openbtn2_left();
-        } else {
-          addition_left_count += deliver_card[0];
-        }
-        if (deliver_card[2] >= 10) {
-          addition_left_count += 10;
-        } else if (deliver_card[2] == 1) {
-          openbtn2_left();
-        } else {
-          addition_left_count += deliver_card[2];
-        }
-        addition_left.textContent = addition_left_count;
-
-   
-
-
-
-        // 右
-
-        card_right_1.textContent = deliver_card[1];
-        card_right_2.textContent = deliver_card[3];
-        card_right_1.classList.remove('none');
-        card_right_2.classList.remove('none');
-        addition_right.classList.remove('none');
-
-        if (deliver_card[1] >= 10) {
-          addition_right_count += 10;
-        } else if (deliver_card[1] == 1) {
-          openbtn2_right();
-        } else {
-          addition_right_count += deliver_card[1];
-        }
-        if (deliver_card[3] >= 10) {
-          addition_right_count += 10;
-        } else if (deliver_card[3] == 1) {
-          openbtn2_right();
-        } else {
-          addition_right_count += deliver_card[3];
-        }
-        // addition_right_count += deliver_card[1] + deliver_card[3];
-        addition_right.textContent = addition_right_count;
+      card_left_1.textContent = deliver_card[0];
+      card_left_2.textContent = deliver_card[2];
+      card_left_1.classList.remove('none');
+      card_left_2.classList.remove('none');
+      addition_left.classList.remove('none');
+      if (deliver_card[0] >= 10) {
+        addition_left_count += 10;
+      } else if (deliver_card[0] == 1) {
+        openbtn2_left();
+      } else {
+        addition_left_count += deliver_card[0];
       }
+      if (deliver_card[2] >= 10) {
+        addition_left_count += 10;
+      } else if (deliver_card[2] == 1) {
+        openbtn2_left();
+      } else {
+        addition_left_count += deliver_card[2];
+      }
+      addition_left.textContent = addition_left_count;
 
-  
-    };
+      // 右
+      console.log(addition_right.textContent);
+
+
+      card_right_1.textContent = deliver_card[1];
+      card_right_2.textContent = deliver_card[3];
+      card_right_1.classList.remove('none');
+      card_right_2.classList.remove('none');
+      addition_right.classList.remove('none');
+      if (deliver_card[1] >= 10) {
+        addition_right_count += 10;
+      } else if (deliver_card[1] == 1) {
+        openbtn2_right();
+      } else {
+        addition_right_count += deliver_card[1];
+      }
+      if (deliver_card[3] >= 10) {
+        addition_right_count += 10;
+      } else if (deliver_card[3] == 1) {
+
+        if (addition_right_count <= 10) {
+          addition_right_count += 11;
+          addition_right.textContent = addition_right_count;
+          checking_right();
+          choise_right.classList.add('none');
+        } else if (addition_right_count > 10) {
+          addition_right_count += 1;
+          addition_right.textContent = addition_right_count;
+          checking_right();
+          choise_right.classList.add('none');
+        }
+
+        // openbtn2_right();
+      } else {
+        addition_right_count += deliver_card[3];
+      }
+      addition_right.textContent = addition_right_count;
+      console.log(addition_right.textContent);
+
+
+    }
+  };
 
   ///////////////
-
-
   class Battle {
     constructor() {
       this.blackjack = 21;
@@ -263,16 +259,14 @@
       this.right;
       this.test = [];
       this.check();
-      this.kekka();
+
       // setTimeout(function () {
-        // this.reset();
       // }, 1000);
-    
+
     }
     check() {
       // let left_check;
       // let right_check;
-
       if (addition_left_count > 21) {
         this.left = 20;
         this.test.push(this.left);
@@ -296,6 +290,7 @@
         this.test.push(this.right);
         console.log(this.right);
       }
+      this.kekka();
     }
     kekka() {
       const winer = Math.min(...this.test);
@@ -310,9 +305,9 @@
       if (this.test[0] == this.test[1]) {
 
         // setTimeout(function () {
-          alert('drow');
+        // alert('drow');
         // }, 1000);
-        
+
 
         my_handmoney += bet_money;
         handmoney_left.textContent = my_handmoney;
@@ -326,6 +321,12 @@
         enemy_handmoney += bet_money * 2;
         handmoney_right.textContent = enemy_handmoney;
       }
+
+
+      this.reset();
+
+
+
     }
     reset() {
       // ランダムで生成された１０個の数字の保持
@@ -347,11 +348,14 @@
       card_left_5.classList.add('none');
       card_right_1.classList.add('none');
       card_right_2.classList.add('none');
-      card_right_3.classList.add('none');
+      // card_right_3.classList.add('none');
+      card_right_3.style.display = "none";
       card_right_4.classList.add('none');
       card_right_5.classList.add('none');
 
- 
+      addition_left.textContent = "";
+      // addition_right.textContent = "";
+      console.log(addition_right.textContent);
 
       addition_left.classList.add('none');
       addition_right.classList.add('none');
@@ -365,9 +369,8 @@
       choise_left.classList.add('none');
       choise_right.classList.add('none');
 
-      addition_left.textContent = "";
-      addition_right.textContent = "";
-      card_right_3.classList.add('none');
+
+      // card_right_3.classList.add('none');
 
     }
 
@@ -400,9 +403,9 @@
   function stand_boolean_check() {
     if (stand_left_boolean == true && stand_right_boolean == true) {
       // setTimeout(function () {
-        alert('お互いのカードが決まりました。バトルを開始します');
-        const battle = new Battle();
-        battle.reset();
+      alert('お互いのカードが決まりました。バトルを開始します');
+      const battle = new Battle();
+      // battle.reset();
       // }, 1000);
 
     }
@@ -415,13 +418,13 @@
     stand_boolean_check();
     check_total();
   });
- function stand_right_click() {
-   stand_right_boolean = true;
-   // alert('stand_right');
-   btn_right_add_smoke();
-   stand_boolean_check();
+  function stand_right_click() {
+    stand_right_boolean = true;
+    // alert('stand_right');
+    btn_right_add_smoke();
+    stand_boolean_check();
 
- }
+  }
 
 
   function yattaroka(num) {
@@ -439,18 +442,42 @@
   }
   function check_total() {
     // setTimeout(function () {
-      if (stand_right_boolean == false) {
+    if (stand_right_boolean == false) {
 
-        if (addition_right_count < 17) {
-         hit_right_click();
-         if (addition_right_count >= 17) {
+      if (addition_right_count < 17) {
+        hit_right_click();
+        if (addition_right_count >= 17) {
           stand_right_click();
-         }
-        } else {
-         stand_right_click();
         }
+      } else {
+        stand_right_click();
       }
-      //  }, 1000);
+    }
+    // setTimeout(function () {
+    if (stand_right_boolean == false) {
+
+      if (addition_right_count < 17) {
+        hit_right_click();
+        if (addition_right_count >= 17) {
+          stand_right_click();
+        }
+      } else {
+        stand_right_click();
+      }
+    }
+    // setTimeout(function () {
+    if (stand_right_boolean == false) {
+
+      if (addition_right_count < 17) {
+        hit_right_click();
+        if (addition_right_count >= 17) {
+          stand_right_click();
+        }
+      } else {
+        stand_right_click();
+      }
+    }
+    //  }, 1000);
   }
 
 
@@ -486,54 +513,66 @@
   }
   // 右側のhitを押した時の挙動
   // hit_right.addEventListener('click', () => {
-    // なんかgetelementしなくてもいけた
+  // なんかgetelementしなくてもいけた
 
-function hit_right_click() {
-  if (deliver_right_count == 0) {
-    card_right_3.textContent = deliver_card[5];
-    card_right_3.classList.remove('none');
-    yattemasu(5);
-    
-  } else if (deliver_right_count == 1) {
-    card_right_4.textContent = deliver_card[7];
-    card_right_4.classList.remove('none');
-    yattemasu(7);
-  } else if (deliver_right_count == 2) {
-    card_right_5.textContent = deliver_card[9];
-    card_right_5.classList.remove('none');
-    yattemasu(9);
-  } else {
-    // alert('右の限界');
-    stand_right_boolean = true;
-    stand_boolean_check();
+  function hit_right_click() {
+    if (deliver_right_count == 0) {
+      card_right_3.textContent = deliver_card[5];
+      card_right_3.classList.remove('none');
+      yattemasu(5);
+    console.log(deliver_right_count);
+
+
+    } else if (deliver_right_count == 1) {
+      card_right_4.textContent = deliver_card[7];
+      card_right_4.classList.remove('none');
+      yattemasu(7);
+    console.log(deliver_right_count);
+
+    } else if (deliver_right_count == 2) {
+      card_right_5.textContent = deliver_card[9];
+      card_right_5.classList.remove('none');
+      yattemasu(9);
+    console.log(deliver_right_count);
+
+    } else {
+      // alert('右の限界');
+      stand_right_boolean = true;
+      stand_boolean_check();
+    }
+
+    if (addition_right_count > 21) {
+      // alert('ぶた');
+      stand_right_boolean = true;
+      btn_right_add_smoke();
+      stand_boolean_check();
+
+    } else if (addition_right_count == 21) {
+      btn_right_add_smoke();
+      stand_right_boolean = true;
+      // alert('Brack Jack');
+      stand_boolean_check();
+    }
   }
-
-  if (addition_right_count > 21) {
-    // alert('ぶた');
-    stand_right_boolean = true;
-    btn_right_add_smoke();
-    stand_boolean_check();
-
-  } else if (addition_right_count == 21) {
-    btn_right_add_smoke();
-    stand_right_boolean = true;
-    // alert('Brack Jack');
-    stand_boolean_check();
-  }
-}
 
 
 
   const btn = document.getElementById('btn');//仮のボタン（後で消去）
   btn.addEventListener('click', () => {
+    console.log(addition_right.textContent);
     gains_left = my_handmoney;
     gains_right = enemy_handmoney;
+    console.log(addition_right.textContent); 
     const card = new Card();
     // チップの表示処理を入れる
     btn_left_remove_smoke();
     btn_right_remove_smoke();
+    console.log(addition_right.textContent);
+
     first_bet();
     card.first_delivery_card();
+    console.log(addition_right.textContent);
+
   });
 
 }
